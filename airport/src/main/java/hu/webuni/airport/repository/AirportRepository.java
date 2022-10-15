@@ -2,8 +2,8 @@ package hu.webuni.airport.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -22,9 +22,21 @@ public interface AirportRepository extends JpaRepository<Airport, Long>{
 	//B Opcio
 	@EntityGraph(attributePaths = {"address", "departures"/*, "arrivals"*/}/*, type = EntityGraphType.LOAD*/)
 	@Query("SELECT a from Airport a")
-	List<Airport> findAllWithAddressAndDepartures();
+	List<Airport> findAllWithAddressAndDepartures(Pageable pageable);
 	
 	@EntityGraph(attributePaths = {"arrivals"})
 	@Query("SELECT a FROM Airport a")
-	List<Airport> findAllWithArrivals();
+	List<Airport> findAllWithArrivals(Pageable pageable);
+	
+	@EntityGraph(attributePaths = {"address"})
+	@Query("SELECT a FROM Airport a")
+	List<Airport> findAllWithAddress(Pageable pageable);
+	
+	@EntityGraph(attributePaths = {"arrivals"})
+	@Query("SELECT a FROM Airport a WHERE a.id IN :ids")
+	List<Airport> findByIdWithArrivals(List<Long> ids);
+
+	@EntityGraph(attributePaths = {"departures"})
+	@Query("SELECT a FROM Airport a WHERE a.id IN :ids")
+	List<Airport> findByIdWithDepartures(List<Long> ids);
 }
