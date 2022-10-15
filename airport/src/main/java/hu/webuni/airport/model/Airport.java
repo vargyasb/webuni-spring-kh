@@ -3,6 +3,7 @@ package hu.webuni.airport.model;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,6 +26,7 @@ import lombok.Setter;
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
+@Cacheable
 public class Airport {
 	
 	@Id
