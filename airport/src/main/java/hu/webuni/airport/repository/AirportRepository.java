@@ -20,7 +20,11 @@ public interface AirportRepository extends JpaRepository<Airport, Long>{
 	//List<Airport> findAllWithAddress();
 	
 	//B Opcio
-	@EntityGraph(attributePaths = {"address", "departures"}/*, type = EntityGraphType.LOAD*/)
+	@EntityGraph(attributePaths = {"address", "departures"/*, "arrivals"*/}/*, type = EntityGraphType.LOAD*/)
 	@Query("SELECT a from Airport a")
 	List<Airport> findAllWithAddressAndDepartures();
+	
+	@EntityGraph(attributePaths = {"arrivals"})
+	@Query("SELECT a FROM Airport a")
+	List<Airport> findAllWithArrivals();
 }

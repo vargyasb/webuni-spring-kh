@@ -56,5 +56,12 @@ public class AirportService {
 	public void delete(long id) {
 		airportRepository.deleteById(id);
 	}
+
+	@Transactional
+	public List<Airport> findAllWithRelationships() {
+		List<Airport> airports = airportRepository.findAllWithAddressAndDepartures();
+		airports = airportRepository.findAllWithArrivals();
+		return airports;
+	}
 	
 }

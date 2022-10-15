@@ -25,4 +25,5 @@ public class AirportDto {
 	private AddressDto address;
 	
 	private List<FlightDto> departures;
+	private List<FlightDto> arrivals;
 }

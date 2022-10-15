@@ -42,7 +42,8 @@ public class AirportController {
 	public List<AirportDto> getAll(@RequestParam Optional<Boolean> full){
 		boolean isFull = full.orElse(false);
 		List<Airport> airports = isFull
-				? airportRepository.findAllWithAddressAndDepartures()
+				? airportService.findAllWithRelationships()
+//				? airportRepository.findAllWithAddressAndDepartures() --> N*M sor jön vissza, ha N arrival és M Departure van
 				: airportRepository.findAll();
 		
 		return isFull 
