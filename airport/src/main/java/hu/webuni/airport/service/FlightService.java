@@ -15,6 +15,7 @@ import com.google.common.collect.Lists;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Predicate;
 
+import hu.webuni.airport.aspect.LogCall;
 import hu.webuni.airport.model.Airport;
 import hu.webuni.airport.model.Flight;
 import hu.webuni.airport.model.QFlight;
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
+@LogCall
 public class FlightService {
 	
 	private final AirportRepository airportRepository;
