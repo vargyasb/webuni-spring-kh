@@ -1,5 +1,6 @@
 package hu.webuni.airport.web;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.ModelAndViewContainer;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import hu.webuni.airport.api.AirportControllerApi;
@@ -28,6 +30,7 @@ import hu.webuni.airport.mapper.AirportMapper;
 import hu.webuni.airport.mapper.HistoryDataMapper;
 import hu.webuni.airport.model.Airport;
 import hu.webuni.airport.model.HistoryData;
+import hu.webuni.airport.model.Image;
 import hu.webuni.airport.repository.AirportRepository;
 import hu.webuni.airport.service.AirportService;
 import lombok.RequiredArgsConstructor;
@@ -131,5 +134,20 @@ public class AirportController implements AirportControllerApi {
 		Pageable pageable = pageableResolver.resolveArgument(methodParameter, mavContainer, nativeWebRequest, binderFactory);
 		return pageable;
 	}
+
+	@Override
+	public ResponseEntity<String> uploadImageForAirport(Long id, @Valid String fileName,
+			@Valid MultipartFile content) {
+		Image image;
+		try {
+			image = airportService.saveImageForAirport(id, fileName, content.getBytes());
+			return ResponseEntity.ok("/api/images/" + image.getId());
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+	
+	
 	
 }
